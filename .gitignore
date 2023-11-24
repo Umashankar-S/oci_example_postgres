@@ -9,7 +9,7 @@
 *.tfvars
 
 # provider file for testing - should be manually added
-provider.tf
+#provider.tf
 
 docs/book
 
