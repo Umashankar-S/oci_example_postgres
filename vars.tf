@@ -7,8 +7,8 @@ variable  compartment_ocid {   }
 ## Network 
 
 variable create_service_gateway { default = true }
-variable create_vcn_subnet { default = false }
-variable psql_subnet_ocid {  } ## Private Subnet OCID of existing Subnet 
+variable create_vcn_subnet { default = true }
+variable psql_subnet_ocid {  default = "" } ## Private Subnet OCID of existing Subnet 
 variable "vcn_cidr" { 
     type = list
     default = ["10.10.0.0/16"] 
