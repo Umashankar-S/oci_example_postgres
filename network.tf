@@ -84,6 +84,8 @@ resource "oci_core_network_security_group" vcn1-nsg {
   freeform_tags = {
   }
   vcn_id = oci_core_vcn.vcn1[0].id
+  count = var.create_vcn_subnet == true ? 1 : 0
+
 }
 
 resource "oci_core_nat_gateway" vcn1-NGTWY {
@@ -94,6 +96,8 @@ resource "oci_core_nat_gateway" vcn1-NGTWY {
   freeform_tags = {
   }
   vcn_id = oci_core_vcn.vcn1[0].id
+  
+  count = var.create_vcn_subnet == true ? 1 : 0
 }
 
 
@@ -119,6 +123,7 @@ resource "oci_core_route_table" "VCN1-RT" {
 
   
   vcn_id = oci_core_vcn.vcn1[0].id
+  
 }
 
 
@@ -178,4 +183,5 @@ resource "oci_core_default_security_list" "Default-Security-List-VCN1" {
     #udp_options = <<Optional value >>
   }
     manage_default_resource_id = oci_core_vcn.vcn1[0].default_security_list_id
+   
 }
