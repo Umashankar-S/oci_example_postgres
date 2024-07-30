@@ -80,11 +80,42 @@ resource "oci_core_service_gateway" "vcn1_sgway" {
 resource "oci_core_network_security_group" vcn1-nsg {
   compartment_id = var.compartment_ocid
 
-  display_name = "NSG"
+  display_name = "PSQLNSG"
   freeform_tags = {
   }
   vcn_id = oci_core_vcn.vcn1[0].id
   count = var.create_vcn_subnet == true ? 1 : 0
+
+}
+
+
+resource "oci_core_network_security_group_security_rule" "vcn1-nsg_rule_0" {
+    network_security_group_id = oci_core_network_security_group.vcn1-nsg[0].id
+    direction = "INGRESS"
+    protocol = "6" #TCP
+
+
+    description = "Ingress on PSQL DB Connection from Within / Other VCNs."
+    source = "0.0.0.0/0"
+    source_type = "CIDR_BLOCK"
+    stateless = false
+     tcp_options {
+      destination_port_range {
+        min = 5432
+        max = 5432
+      }
+  }
+
+}
+resource "oci_core_network_security_group_security_rule" "vcn1-nsg_rule_1" {
+    network_security_group_id = oci_core_network_security_group.vcn1-nsg[0].id
+    direction = "EGRESS"
+    protocol = "6" #TCP
+
+    description = "Postgres Services to OSN for Backup ."
+    destination_type  = "SERVICE_CIDR_BLOCK"
+    destination       = lookup(data.oci_core_services.all_oci_services[0].services[0], "cidr_block")
+    stateless = false
 
 }
 

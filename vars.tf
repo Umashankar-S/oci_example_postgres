@@ -14,11 +14,17 @@ variable "vcn_cidr" {
     default = ["10.10.0.0/16"] 
     }
 
+variable "create_vault" { default = true }
+variable "vault_id" { 
+  default = ""
+}
 ## PSQL 
 variable "psql_admin" {
     type = string
     description = "Name of PSQL Admin Usern"
 }
+
+variable psql_version {  default = 14 } 
 variable inst_count  { default = 1 }
 
 variable "num_ocpu" { default = 2 }
@@ -35,5 +41,14 @@ variable  psql_shape  {
     }
 }
 
+variable psql_iops {
+   type = map(number)
+    default = {
+    75  = 75000
+    150 = 150000
+    225 = 225000
+    300 = 300000
+    }
+}
 
 #variable psql_passwd_type  {  default = "PLAIN_TEXT" }
