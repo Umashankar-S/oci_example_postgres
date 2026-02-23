@@ -62,7 +62,7 @@ resource "oci_core_service_gateway" "vcn1_sgway" {
     ignore_changes = [defined_tags, freeform_tags]
   }
 
-  count = var.create_service_gateway == true ? 1 : 0
+  count = var.create_vcn_subnet &&  var.create_service_gateway == true ? 1 : 0
 }
 
 

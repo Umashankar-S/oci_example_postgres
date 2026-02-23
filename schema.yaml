@@ -102,7 +102,7 @@ variables:
 
   psql_shape_type:
     type: enum
-    title: "Filter shapes"
+    title: "Filter shapes : Fixed (E5 or Standard3) or Flex ( E5,E6,Standard3)"
     enum:
       - "Fixed"
       - "Flex"
