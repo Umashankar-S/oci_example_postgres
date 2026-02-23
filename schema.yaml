@@ -92,10 +92,10 @@ variables:
   
   psql_shape_family:
     type: enum
-    title: "PostgreSQL Instance family. e4 or e5 or Standard3"
+    title: "PostgreSQL Instance family. e5 or e6 or Standard3"
     enum:
-      - "e4"
       - "e5"
+      - "e6"
       - "standard3"
     required: true
     visible: true
@@ -211,9 +211,9 @@ variables:
     type: boolean
     required: true
     visible:  
-    and:
+     and:
      - create_vcn_subnet 
-    not:
+     not:
      - vcn_id 
 
   vcn_cidr:
