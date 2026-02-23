@@ -1,5 +1,6 @@
 
 resource oci_kms_key psql_key {
+  count = var.use_vault ?  1 : 0
   compartment_id = var.compartment_ocid
   defined_tags = {
   }
@@ -14,7 +15,7 @@ resource oci_kms_key psql_key {
     length    = "32"
   }
   #management_endpoint = "https://ejsv6rxhaagwg-management.kms.us-ashburn-1.oraclecloud.com"
-  management_endpoint  =  data.oci_kms_vault.data_psql_oci_kms_vault_1.management_endpoint 
+  management_endpoint  =  data.oci_kms_vault.data_psql_oci_kms_vault_1[0].management_endpoint 
   protection_mode     = "SOFTWARE"
   #restore_from_file = <<Optional value>>
   #restore_from_object_store = <<Optional value>>
@@ -25,10 +26,11 @@ resource oci_kms_key psql_key {
 }
 
 resource oci_kms_key_version psql_key_version {
+  count = var.use_vault ? 1 : 0
   #external_key_version_id = <<Optional value>>
-  key_id              = oci_kms_key.psql_key.id
+  key_id              = oci_kms_key.psql_key[0].id
   #management_endpoint = "https://ejsv6rxhaagwg-management.kms.us-ashburn-1.oraclecloud.com"
-  management_endpoint  =  data.oci_kms_vault.data_psql_oci_kms_vault_1.management_endpoint 
+  management_endpoint  =  data.oci_kms_vault.data_psql_oci_kms_vault_1[0].management_endpoint 
 
   #time_of_deletion = <<Optional value>>
   

@@ -4,11 +4,12 @@ resource "oci_kms_vault" "psql_oci_kms_vault_1" {
 	display_name = "psql_oci_kms_vault"
 	freeform_tags = {}
 	vault_type = "DEFAULT"
-  count = var.create_vault == true ? 1 : 0 
+  count =  var.use_vault == true  && var.create_vault == true ? 1 : 0 
 }
 
 
 resource oci_vault_secret psql_secret {
+  count = var.use_vault ? 1 : 0
   compartment_id = var.compartment_ocid
   
   
@@ -17,7 +18,7 @@ resource oci_vault_secret psql_secret {
     content_type = "BASE64"
 
     #Optional
-    content = base64encode(random_string.psql_admin_password.result)
+    content = base64encode(local.psql_admin_password)
     name    = "psql_secret"
     stage   = "CURRENT"
   }
@@ -25,7 +26,7 @@ resource oci_vault_secret psql_secret {
 
   freeform_tags = {
   }
-  key_id = oci_kms_key.psql_key.id
+  key_id = oci_kms_key.psql_key[0].id
   metadata = {
   }
   vault_id  = var.create_vault == true ? oci_kms_vault.psql_oci_kms_vault_1[0].id : var.vault_id
@@ -37,10 +38,6 @@ resource oci_vault_secret psql_secret {
 }
 
 
-data "oci_kms_vault" "data_psql_oci_kms_vault_1" {
-	#Required
-	vault_id = var.create_vault == true ? oci_kms_vault.psql_oci_kms_vault_1[0].id : var.vault_id
-    
-}
+
 
 

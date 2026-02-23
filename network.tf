@@ -48,15 +48,6 @@ resource oci_core_subnet vcn1-psql-priv-subnet {
 
 # Service Gateway (SGW)
 #######################
-data "oci_core_services" "all_oci_services" {
-  filter {
-    name   = "name"
-    values = ["All .* Services In Oracle Services Network"]
-    regex  = true
-  }
-  count = var.create_service_gateway == true ? 1 : 0
-}
-
 resource "oci_core_service_gateway" "vcn1_sgway" {
   compartment_id = var.compartment_ocid
   display_name   = "SRVC_GTWY"
@@ -75,6 +66,8 @@ resource "oci_core_service_gateway" "vcn1_sgway" {
 }
 
 
+# Network Security Group
+#########################
 
 
 resource "oci_core_network_security_group" vcn1-nsg {
@@ -105,6 +98,7 @@ resource "oci_core_network_security_group_security_rule" "vcn1-nsg_rule_0" {
         max = 5432
       }
   }
+   count = var.create_vcn_subnet == true ? 1 : 0
 
 }
 resource "oci_core_network_security_group_security_rule" "vcn1-nsg_rule_1" {
@@ -116,8 +110,13 @@ resource "oci_core_network_security_group_security_rule" "vcn1-nsg_rule_1" {
     destination_type  = "SERVICE_CIDR_BLOCK"
     destination       = lookup(data.oci_core_services.all_oci_services[0].services[0], "cidr_block")
     stateless = false
+    count = var.create_vcn_subnet == true ? 1 : 0
 
 }
+
+
+# NAT Gateway 
+#########################
 
 resource "oci_core_nat_gateway" vcn1-NGTWY {
   block_traffic  = "false"
@@ -132,6 +131,8 @@ resource "oci_core_nat_gateway" vcn1-NGTWY {
 }
 
 
+# Route Table
+#########################
 resource "oci_core_route_table" "VCN1-RT" {
   count = var.create_vcn_subnet == true ? 1 : 0
   compartment_id = var.compartment_ocid
@@ -156,6 +157,10 @@ resource "oci_core_route_table" "VCN1-RT" {
   vcn_id = oci_core_vcn.vcn1[0].id
   
 }
+
+
+# Security List 
+#########################
 
 
 resource "oci_core_default_security_list" "Default-Security-List-VCN1" {

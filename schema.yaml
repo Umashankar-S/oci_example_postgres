@@ -1,0 +1,260 @@
+# Title shown in Application Information tab.
+title: "Postgres SQL for OCI Deployment"
+# Sub Title shown in Application Information tab.
+description: "This Oracle Resource manager / Terraform stack will help to deploy  Postgres SQL for OCI  either using existing VCN/Subnet or on new VCN/Subnet"
+schemaVersion: 1.1.0
+version: "20190304"
+
+# URL of Logo Icon used on Application Information tab. Logo must be 130x130 pixels.
+
+logoUrl: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDsgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiB3aWR0aD0iODFweCIgaGVpZ2h0PSI4MHB4IiB2aWV3Qm94PSItMC41IC0wLjUgODEgODAiPjxkZWZzLz48Zz48ZyBkYXRhLWNlbGwtaWQ9IjAiPjxnIGRhdGEtY2VsbC1pZD0iMSI+PGcgZGF0YS1jZWxsLWlkPSJ3SWRiQ2ZLZWZzNmNMSHIybjhyRC0xNCI+PGc+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjgxIiBoZWlnaHQ9IjgwIiBmaWxsPSJub25lIiBzdHJva2U9Im5vbmUiIHBvaW50ZXItZXZlbnRzPSJhbGwiLz48L2c+PGcgZGF0YS1jZWxsLWlkPSJ3SWRiQ2ZLZWZzNmNMSHIybjhyRC0xNSI+PGc+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjgxIiBoZWlnaHQ9IjgwIiBmaWxsPSJub25lIiBzdHJva2U9Im5vbmUiIHBvaW50ZXItZXZlbnRzPSJhbGwiLz48L2c+PGcgZGF0YS1jZWxsLWlkPSJ3SWRiQ2ZLZWZzNmNMSHIybjhyRC0xNiI+PGc+PHBhdGggZD0iTSA1LjE5IDc4Ljg2IEMgMi44OSA3OC44NiAwLjk2IDc2Ljk1IDAuOTYgNzQuNjcgTCAwLjk2IDUuMTMgQyAwLjk2IDIuODUgMi44OSAwLjk1IDUuMTkgMC45NSBMIDc1LjgxIDAuOTUgQyA3OC4xMSAwLjk1IDgwLjA0IDIuODUgODAuMDQgNS4xMyBMIDgwLjA0IDc0Ljg3IEMgODAuMDQgNzcuMTUgNzguMTEgNzkuMDUgNzUuODEgNzkuMDUgTCA1LjE5IDc4Ljg2IEwgNS4xOSA3OC44NiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSJub25lIiBwb2ludGVyLWV2ZW50cz0iYWxsIiBzdHlsZT0iZmlsbDogcmdiKDI1NSwgMjU1LCAyNTUpOyIvPjwvZz48L2c+PGcgZGF0YS1jZWxsLWlkPSJ3SWRiQ2ZLZWZzNmNMSHIybjhyRC0xNyI+PGc+PHBhdGggZD0iTSA3NS42MSAxLjkgQyA3Ny4zNSAxLjkgNzguODkgMy40MyA3OC44OSA1LjE0IEwgNzguODkgNzUuMDUgQyA3OC44OSA3Ni43NiA3Ny4zNSA3OC4yOSA3NS42MSA3OC4yOSBMIDUuMTkgNzguMjkgQyAzLjQ3IDc4LjEgMS45MyA3Ni41NyAxLjkzIDc0Ljg2IEwgMS45MyA1LjE0IEMgMS45MyAzLjQzIDMuNDcgMS45IDUuMTkgMS45IEwgNzUuNjEgMS45IEwgNzUuNjEgMS45IE0gNzUuNjEgMCBMIDUuMTkgMCBDIDIuMzEgMCAwIDIuMjkgMCA1LjE0IEwgMCA3NS4wNSBDIDAgNzcuNzEgMi4zMSA4MCA1LjE5IDgwIEwgNzUuODEgODAgQyA3OC42OSA4MCA4MSA3Ny43MSA4MSA3NC44NiBMIDgxIDUuMTQgQyA4MC44MSAyLjI5IDc4LjUgMCA3NS42MSAwIEwgNzUuNjEgMCIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSJub25lIiBwb2ludGVyLWV2ZW50cz0iYWxsIiBzdHlsZT0iZmlsbDogcmdiKDI1NSwgMjU1LCAyNTUpOyIvPjwvZz48L2c+PC9nPjxnIGRhdGEtY2VsbC1pZD0id0lkYkNmS2VmczZjTEhyMm44ckQtMTgiPjxnPjxyZWN0IHg9IjEuOTMiIHk9IjEuOSIgd2lkdGg9Ijc3LjE0IiBoZWlnaHQ9Ijc2LjE5IiBmaWxsPSJub25lIiBzdHJva2U9Im5vbmUiIHBvaW50ZXItZXZlbnRzPSJhbGwiLz48L2c+PGcgZGF0YS1jZWxsLWlkPSJ3SWRiQ2ZLZWZzNmNMSHIybjhyRC0xOSI+PGc+PHBhdGggZD0iTSA3NS42MSAxLjkgTCA1LjIgMS45IEMgMy40NyAxLjkgMS45MyAzLjQzIDEuOTMgNS4xNCBMIDEuOTMgNzUuMDUgQyAxLjkzIDc2LjU3IDMuNDcgNzguMSA1LjIgNzguMSBMIDc1LjggNzguMSBDIDc3LjUzIDc4LjEgNzkuMDcgNzYuNTcgNzkuMDcgNzQuODYgTCA3OS4wNyA1LjE0IEMgNzguODggMy40MyA3Ny4zNCAxLjkgNzUuNjEgMS45IEwgNzUuNjEgMS45IE0gNzUuOTkgNzQuODYgQyA3NS45OSA3NS4wNSA3NS44IDc1LjI0IDc1LjYxIDc1LjI0IEwgNS4yIDc1LjI0IEMgNS4wMSA3NS4yNCA0LjgxIDc1LjA1IDQuODEgNzQuODYgTCA0LjgxIDUuMTQgQyA0LjgxIDQuOTUgNS4wMSA0Ljc2IDUuMiA0Ljc2IEwgNzUuOCA0Ljc2IEMgNzUuOTkgNC43NiA3Ni4xOSA0Ljk1IDc2LjE5IDUuMTQgTCA3NS45OSA3NC44NiBMIDc1Ljk5IDc0Ljg2IiBmaWxsPSIjMmQ1OTY3IiBzdHJva2U9Im5vbmUiIHBvaW50ZXItZXZlbnRzPSJhbGwiIHN0eWxlPSJmaWxsOiByZ2IoNDUsIDg5LCAxMDMpOyIvPjwvZz48L2c+PGcgZGF0YS1jZWxsLWlkPSJ3SWRiQ2ZLZWZzNmNMSHIybjhyRC0yMCI+PGc+PHBhdGggZD0iTSAzOC41NyA5LjUyIEwgMjIuMTggOS41MiBMIDIyLjE4IDI1LjcxIEwgMzguNTcgMjUuNzEgTCAzOC41NyA5LjUyIEwgMzguNTcgOS41MiBNIDM1LjgxIDIzLjE3IEwgMjQuOTQgMjMuMTcgTCAyNC45NCAxMi4yNSBMIDM1LjgxIDEyLjI1IEwgMzUuODEgMjMuMTcgTCAzNS44MSAyMy4xNyIgZmlsbD0iIzJkNTk2NyIgc3Ryb2tlPSJub25lIiBwb2ludGVyLWV2ZW50cz0iYWxsIiBzdHlsZT0iZmlsbDogcmdiKDQ1LCA4OSwgMTAzKTsiLz48L2c+PC9nPjxnIGRhdGEtY2VsbC1pZD0id0lkYkNmS2VmczZjTEhyMm44ckQtMjEiPjxnPjxwYXRoIGQ9Ik0gNTcuODYgOS41MiBMIDQxLjQ2IDkuNTIgTCA0MS40NiAyNS43MSBMIDU3Ljg2IDI1LjcxIEMgNTcuNjcgMjUuNzEgNTcuNjcgOS41MiA1Ny44NiA5LjUyIEwgNTcuODYgOS41MiBNIDU1LjA5IDIzLjE3IEwgNDQuMjMgMjMuMTcgTCA0NC4yMyAxMi4yNSBMIDU1LjA5IDEyLjI1IEwgNTUuMDkgMjMuMTcgTCA1NS4wOSAyMy4xNyIgZmlsbD0iIzJkNTk2NyIgc3Ryb2tlPSJub25lIiBwb2ludGVyLWV2ZW50cz0iYWxsIiBzdHlsZT0iZmlsbDogcmdiKDQ1LCA4OSwgMTAzKTsiLz48L2c+PC9nPjxnIGRhdGEtY2VsbC1pZD0id0lkYkNmS2VmczZjTEhyMm44ckQtMjIiPjxnPjxwYXRoIGQ9Ik0gMzQuNDMgMzIuMjQgTCA0NS42MSAzMi4yNCBMIDQ1LjYxIDM2LjYgTCA0OC4yMSAzNy4xNCBMIDQ4LjIxIDI5LjUyIEwgMzEuODIgMjkuNTIgTCAzMS44MiAzNy4xNCBMIDM0LjQzIDM2LjYgTCAzNC40MyAzMi4yNCBMIDM0LjQzIDMyLjI0IiBmaWxsPSIjMmQ1OTY3IiBzdHJva2U9Im5vbmUiIHBvaW50ZXItZXZlbnRzPSJhbGwiIHN0eWxlPSJmaWxsOiByZ2IoNDUsIDg5LCAxMDMpOyIvPjwvZz48L2c+PGcgZGF0YS1jZWxsLWlkPSJ3SWRiQ2ZLZWZzNmNMSHIybjhyRC0yMyI+PGc+PHBhdGggZD0iTSA1My43MiAzMi4zIEwgNjQuODkgMzIuMyBMIDY0Ljg5IDQxLjM1IEwgNjcuNSA0MS45IEwgNjcuNSAyOS41MiBMIDUxLjExIDI5LjUyIEwgNTEuMTEgMzcuODQgTCA1My43MiAzOC41OCBMIDUzLjcyIDMyLjMgTCA1My43MiAzMi4zIiBmaWxsPSIjMmQ1OTY3IiBzdHJva2U9Im5vbmUiIHBvaW50ZXItZXZlbnRzPSJhbGwiIHN0eWxlPSJmaWxsOiByZ2IoNDUsIDg5LCAxMDMpOyIvPjwvZz48L2c+PGcgZGF0YS1jZWxsLWlkPSJ3SWRiQ2ZLZWZzNmNMSHIybjhyRC0yNCI+PGc+PHBhdGggZD0iTSAxNS4xNCAzMi4zIEwgMjYuMzIgMzIuMyBMIDI2LjMyIDM4LjU4IEwgMjguOTMgMzcuODQgTCAyOC45MyAyOS41MiBMIDEyLjU0IDI5LjUyIEwgMTIuNTQgNDEuOSBMIDE1LjE0IDQxLjM1IEwgMTUuMTQgMzIuMyBMIDE1LjE0IDMyLjMiIGZpbGw9IiMyZDU5NjciIHN0cm9rZT0ibm9uZSIgcG9pbnRlci1ldmVudHM9ImFsbCIgc3R5bGU9ImZpbGw6IHJnYig0NSwgODksIDEwMyk7Ii8+PC9nPjwvZz48ZyBkYXRhLWNlbGwtaWQ9IndJZGJDZktlZnM2Y0xIcjJuOHJELTI1Ij48Zz48cGF0aCBkPSJNIDQwLjAyIDM3LjE0IEwgOS42NCA0NC40NCBMIDEwLjAzIDQ1Ljc1IEMgMTMuNDkgNTkuMjIgMjUuNzkgNjguNTcgNDAuMDIgNjguNTcgQyA1NC4yNSA2OC41NyA2Ni43NCA1OS4yMiA3MC4wMSA0NS43NSBMIDcwLjM5IDQ0LjQ0IEwgNDAuMDIgMzcuMTQgTCA0MC4wMiAzNy4xNCBNIDM4LjY4IDQwLjMyIEwgMzguNjggNjUuNzYgQyAyNi43NSA2NS4zOSAxNi41NiA1Ny41MyAxMy4xMSA0Ni41IEwgMzguNjggNDAuMzIgTCAzOC42OCA0MC4zMiBNIDQxLjM2IDY1Ljc2IEwgNDEuMzYgNDAuMzIgTCA2Ni45MyA0Ni41IEMgNjMuNDcgNTcuNTMgNTMuMjkgNjUuMzkgNDEuMzYgNjUuNzYgTCA0MS4zNiA2NS43NiIgZmlsbD0iIzJkNTk2NyIgc3Ryb2tlPSJub25lIiBwb2ludGVyLWV2ZW50cz0iYWxsIiBzdHlsZT0iZmlsbDogcmdiKDQ1LCA4OSwgMTAzKTsiLz48L2c+PC9nPjwvZz48L2c+PC9nPjwvZz48L2c+PC9zdmc+
+
+source:
+  type: web
+
+
+locale: "en"
+variableGroups:
+  - title: "Basic Hidden"
+    variables:
+    - tenancy_ocid
+    - region
+    visible: false
+
+  - title: "PostgreSQL DBSystem Configuration"
+    variables:
+    - compartment_ocid
+    - psql_displayname
+    - psql_version 
+    - node_count
+    - ocpu
+    - psql_shape_family
+    - psql_shape_type
+    - storage_iops
+    - psql_admin
+    - psql_admin_password
+    - use_vault
+    - create_vault
+    - vault_id
+  
+  - title: "PostgreSQL Configure Extensions"
+    variables:
+    - create_psql_configuration
+    - psql_configuration_ocid
+    - psql_config_display_name
+    - psql_config_description
+    - psql_config_is_flexible
+    - psql_config_compatible_shapes
+    - psql_config_overrides
+  
+
+  - title: "Network Configuration"
+    variables:
+    - create_vcn_subnet
+    - create_service_gateway
+    - vcn_id
+    - psql_subnet_ocid
+    - nsg_id
+    - vcn_cidr   
+
+
+
+variables:
+  compartment_ocid: 
+    type: oci:identity:compartment:id
+    title: "PostgreSQL Compartment"
+    default: compartment_ocid
+    required: true
+
+  psql_displayname:
+   type: string
+   title: "PostgreSQL DB system Display Name"
+   required: true
+   visible: true
+
+  psql_version:
+    type: number
+    title: "PSQL Version"
+    required: true
+    visible: true
+
+  node_count:
+    type: number
+    title: "Node Count"
+    required: true
+    visible: true
+ 
+  ocpu:
+    type: number
+    title: "# of OCPUs"
+    required: true
+    visible: true
+  
+  psql_shape_family:
+    type: enum
+    title: "PostgreSQL Instance family. e4 or e5 or Standard3"
+    enum:
+      - "e4"
+      - "e5"
+      - "standard3"
+    required: true
+    visible: true
+
+  psql_shape_type:
+    type: enum
+    title: "Filter shapes"
+    enum:
+      - "Fixed"
+      - "Flex"
+    required: true
+    visible: true
+
+  storage_iops:
+    type: enum
+    title: "Storage IOPS (75K , 150K , 225K , 300K) "
+    enum:
+      - 75
+      - 150
+      - 225
+      - 300
+    required: true
+    visible: true
+
+  psql_admin:
+    type: string
+    title: "PSQL ADMIN Username "
+    required: true
+    visible: true
+
+  psql_admin_password:
+    type: string
+    title: "Password Text(optional)"
+    required: false
+    visible: true
+
+  use_vault:
+    type: boolean
+    title: "Use Vault "
+    required: true
+    visible: true
+
+  create_vault:
+    type: boolean
+    title: "Create Vault"
+    required: false
+    visible: 
+     and:
+     - use_vault
+
+  vault_id:
+    type: oci:kms:vault:id 
+    title: "Vault OCID"
+    dependsOn:
+      compartmentId: compartment_ocid
+    required: false
+    visible: 
+      not:
+      - create_vault 
+      and:
+      - use_vault
+      
+
+  create_psql_configuration:
+    type: boolean
+    title: "Enable Psql Extensions and Configurations"
+    required: true
+    visible: true
+
+  psql_configuration_ocid:
+    type: string
+    title: "Existing PostgreSQL configuration if any"
+    required: false
+    visible: 
+    - create_psql_configuration
+
+  psql_config_display_name:
+    type: string
+    required: false
+    visible: 
+    - create_psql_configuration
+
+  psql_config_description:
+    type: string
+    required: false
+    visible: 
+    - create_psql_configuration
+
+  psql_config_is_flexible:
+    type: boolean
+    required: true
+    visible: 
+    - create_psql_configuration
+
+  psql_config_compatible_shapes:
+    type: string
+    required: false
+    visible: false
+
+  psql_config_overrides:
+    type: string
+    required: false
+    visible: 
+    - create_psql_configuration
+
+  
+  create_vcn_subnet:
+    type: boolean
+    required: true
+    visible:  true
+  
+  create_service_gateway:
+    type: boolean
+    required: true
+    visible:  
+    and:
+     - create_vcn_subnet 
+    not:
+     - vcn_id 
+
+  vcn_cidr:
+    type: string
+    required: true
+    visible:  
+     and:
+     - create_vcn_subnet  
+     not:
+     - vcn_id  
+
+  vcn_id:
+    type: oci:core:vcn:id
+    title: "Existing VCN OCID"
+    dependsOn:
+      compartmentId: compartment_ocid
+    required: true
+    visible:  
+     not: 
+     - create_vcn_subnet  
+  
+  psql_subnet_ocid:
+    type: oci:core:subnet:id
+    title: "PostgreSQL DB subnet OCID"
+    dependsOn:
+      vcnId: vcn_id
+      compartmentId: compartment_ocid
+    required: true
+    visible:  
+     not:
+     - create_vcn_subnet 
+
+  nsg_id:
+    type: oci:core:nsg:id
+    title: "Existing NSG OCID"
+    dependsOn:
+      compartmentId: compartment_ocid
+      vcnId: vcn_id
+    required: true
+    visible:  
+     not: 
+     - create_vcn_subnet
+  
+  

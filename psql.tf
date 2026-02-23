@@ -1,9 +1,6 @@
+##  OCI Postgres DB 
 
-
-## Creating OCI Postgres DB 
-
-
-resource oci_psql_db_system psql_inst_1 {
+resource oci_psql_db_system psql_instance {
   compartment_id = var.compartment_ocid
   #config_id      = 
   db_version = var.psql_version
@@ -13,42 +10,42 @@ resource oci_psql_db_system psql_inst_1 {
         #Required
         password_details {
             #Required
-            
-            #password_type = var.psql_passwd_type == "PLAIN_TEXT"  ?   "PLAIN_TEXT" : "VAULT_SECRET"
-            password_type = "VAULT_SECRET"
-            #password =  random_string.psql_admin_password.result
-            
+            password_type = local.psql_passwd_type           
+            password = var.use_vault ?  null : local.psql_admin_password
             #Optional
-           # password = var.db_system_credentials_password_details_password
-             secret_id = oci_vault_secret.psql_secret.id 
-            secret_version = 1
+             secret_id = var.use_vault ? oci_vault_secret.psql_secret[0].id : null
+             secret_version = var.use_vault  ?  1 : null
         }
         username = var.psql_admin
     }
 
   description = "Postgres SQL Instance"
-  display_name = "psql_inst_1"
+  display_name = var.psql_displayname
   freeform_tags = {
   }
-  instance_count              = var.inst_count
-  instance_memory_size_in_gbs =  var.num_ocpu  * 16 
-  instance_ocpu_count         = var.num_ocpu
+  instance_count              = var.node_count
   #instances_details = <<Optional value>>
+
   management_policy {
     #backup_policy = <<Optional value >>
     maintenance_window_start = "FRI 04:00"
   }
   network_details {
-    nsg_ids = [ var.create_vcn_subnet == true ? oci_core_network_security_group.vcn1-nsg[0].id : null
+    nsg_ids = [ var.create_vcn_subnet == true ? oci_core_network_security_group.vcn1-nsg[0].id : var.nsg_id
     ]
     #primary_db_endpoint_private_ip = 
     subnet_id      = var.create_vcn_subnet == true ?  oci_core_subnet.vcn1-psql-priv-subnet[0].id : var.psql_subnet_ocid
   }
-   shape = lookup(var.psql_shape,var.num_ocpu, "PostgreSQL.VM.Standard.E4.Flex.2.32GB")
-  
+
+  #shape = var.psql_shape_type == "Fixed" ?  local.all_psql_shapes_fixed["${var.psql_shape_family}_${var.ocpu}"] : local.all_psql_shapes_flex["${var.psql_shape_family}_${var.ocpu}"]
+  shape = var.psql_shape_type == "Fixed" ?   ( lookup(local.all_psql_shapes_fixed, "${var.psql_shape_family}_${var.ocpu}",  local.all_psql_shapes_fixed["${var.psql_shape_family}_2"]) )  : ( lookup(local.all_psql_shapes_flex, "${var.psql_shape_family}_${var.ocpu}",local.all_psql_shapes_flex["${var.psql_shape_family}_2"]) )
+  #Conatins key validation fixes : The given key does not identify an element in this collection value.  Also as a fail safe it uses 2 OCPUs shape
+  instance_ocpu_count = local.ocpu
+  instance_memory_size_in_gbs =  local.ocpu  * 16 
   storage_details {
-    availability_domain   = data.oci_identity_availability_domain.US-ASHBURN-AD-1.name
-    iops                  = var.psql_iops[75]
+
+    availability_domain   = data.oci_identity_availability_domains.ads.availability_domains[0].name
+    iops                  = local.psql_iops[var.storage_iops]
     is_regionally_durable = "false"
     system_type           = "OCI_OPTIMIZED_STORAGE"
   }
